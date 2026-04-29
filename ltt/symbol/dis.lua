@@ -1,4 +1,5 @@
 local _M = {
+    id = "dis",
     name = "析取",
     alias = {
         "∨", "|", "v", "+"

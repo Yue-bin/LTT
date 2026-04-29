@@ -2,12 +2,12 @@
 local symbol_list = require("ltt.symbol")
 
 return function(input)
-    for name, symbol in pairs(symbol_list) do
+    for _, symbol in ipairs(symbol_list) do
         for _, alias in ipairs(symbol.alias) do
             if input:match(alias) then
                 return {
                     type = "symbol",
-                    value = name
+                    value = symbol.id
                 }
             end
         end

@@ -1,4 +1,5 @@
 local _M = {
+    id = "con",
     name = "合取",
     alias = {
         "∧", "&", "^", "*"
