@@ -8,7 +8,7 @@ local registed = {
 local parser_list = {}
 
 for _, parser_name in ipairs(registed) do
-    table.insert(parser_list, require("ltt.parse.parser." .. parser_name))
+    table.insert(parser_list, (require("ltt.parse.parser." .. parser_name)))
 end
 
 return function(input)

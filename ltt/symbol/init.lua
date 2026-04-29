@@ -7,7 +7,7 @@ local registed = {
 local symbol_list = {}
 
 for _, symbol in ipairs(registed) do
-    table.insert(symbol_list, require("ltt.symbol." .. symbol))
+    table.insert(symbol_list, (require("ltt.symbol." .. symbol)))
 end
 
 return symbol_list
