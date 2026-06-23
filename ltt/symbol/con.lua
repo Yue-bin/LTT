@@ -4,6 +4,9 @@ local _M = {
     alias = {
         "∧", "&", "^", "*"
     },
+    arity = 2,
+    precedence = 4,
+    associativity = "left",
     param = {
         "left", "right"
     }

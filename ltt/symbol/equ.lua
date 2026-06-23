@@ -1,11 +1,11 @@
 local _M = {
-    id = "dis",
-    name = "析取",
+    id = "equ",
+    name = "等价",
     alias = {
-        "∨", "|", "v", "+"
+        "⇔", "↔", "<->", "="
     },
     arity = 2,
-    precedence = 3,
+    precedence = 1,
     associativity = "left",
     param = {
         "left", "right"
@@ -13,7 +13,7 @@ local _M = {
 }
 
 function _M.opt(left, right)
-    return left or right
+    return left == right
 end
 
 return _M
