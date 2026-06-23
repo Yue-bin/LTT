@@ -1,8 +1,11 @@
--- 每个node包含：解析好的token，以及连接关系
--- 初值为nil
-local node = {
-    token = nil,
-    left = nil,
-    right = nil,
-    father = nil -- 加上这个方便回溯
-}
+local _M = {}
+
+function _M.new(token, left, right)
+    return {
+        token = token,
+        left = left,
+        right = right
+    }
+end
+
+return _M
