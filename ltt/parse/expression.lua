@@ -12,6 +12,10 @@ local function token_name(token)
     return token.raw or token.value or token.type
 end
 
+local function parse_error(message)
+    error(message, 0)
+end
+
 function parser.new(tokens)
     return setmetatable({
         tokens = tokens,
@@ -33,7 +37,7 @@ function parser:parse_prefix()
     local token = self:advance()
 
     if not token then
-        error("缺少表达式")
+        parse_error("缺少表达式")
     end
 
     if token.type == "var" or token.type == "val" then
@@ -45,7 +49,7 @@ function parser:parse_prefix()
         local close = self:advance()
 
         if not close or close.type ~= "rparen" then
-            error("缺少右括号")
+            parse_error("缺少右括号")
         end
 
         return expr
@@ -59,7 +63,7 @@ function parser:parse_prefix()
         end
     end
 
-    error("不能以 " .. token_name(token) .. " 开始表达式")
+    parse_error("不能以 " .. token_name(token) .. " 开始表达式")
 end
 
 function parser:parse_expression(min_precedence)
@@ -102,7 +106,7 @@ return function(tokens)
     local extra = state:peek()
 
     if extra then
-        error("无法解析多余内容: " .. token_name(extra))
+        parse_error("无法解析多余内容: " .. token_name(extra))
     end
 
     return ast

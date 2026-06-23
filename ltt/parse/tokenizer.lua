@@ -59,7 +59,7 @@ return function(input)
                     })
                     index = index + #var
                 else
-                    error("无法识别的字符: " .. char)
+                    error("无法识别的字符: " .. char, 0)
                 end
             end
         end
