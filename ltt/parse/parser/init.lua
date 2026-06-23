@@ -1,3 +1,5 @@
+-- 这个parser是解析单个token的
+
 -- 按注册顺序匹配
 local registed = {
     "symbol", -- 符号"
