@@ -2,8 +2,12 @@
 local reg = "%a"
 
 return function(input)
-    return {
-        type = "var",
-        value = input:match(reg)
-    }
+    local value = input:match(reg)
+
+    if value then
+        return {
+            type = "var",
+            value = value
+        }
+    end
 end

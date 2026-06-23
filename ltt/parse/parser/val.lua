@@ -2,8 +2,12 @@
 local reg = "[01]"
 
 return function(input)
-    return {
-        type = "val",
-        value = input:match(reg)
-    }
+    local value = input:match(reg)
+
+    if value then
+        return {
+            type = "val",
+            value = value
+        }
+    end
 end

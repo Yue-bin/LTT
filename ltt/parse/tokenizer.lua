@@ -1,6 +1,69 @@
--- 返回一个迭代器，每次迭代返回一个token
--- 目前的实现是一个char一个token，缺点是不支持多字符变元和非ascii字符，优点是简单
+local symbol_list = require("ltt.symbol")
+
+local function append(tokens, token)
+    table.insert(tokens, token)
+end
 
 return function(input)
-    return string.gmatch(input, ".")
+    local tokens = {}
+    local index = 1
+
+    while index <= #input do
+        local char = input:sub(index, index)
+
+        if char:match("%s") then
+            index = index + 1
+        elseif char == "(" then
+            append(tokens, {
+                type = "lparen",
+                value = char
+            })
+            index = index + 1
+        elseif char == ")" then
+            append(tokens, {
+                type = "rparen",
+                value = char
+            })
+            index = index + 1
+        else
+            local rest = input:sub(index)
+            local var = rest:match("^[_%a][_%w]*")
+            local val = rest:match("^[01]")
+
+            if val then
+                append(tokens, {
+                    type = "val",
+                    value = val
+                })
+                index = index + #val
+            elseif var and #var > 1 then
+                append(tokens, {
+                    type = "var",
+                    value = var
+                })
+                index = index + #var
+            else
+                local symbol, alias = symbol_list.match_alias(input, index)
+
+                if symbol then
+                    append(tokens, {
+                        type = "symbol",
+                        value = symbol.id,
+                        raw = alias
+                    })
+                    index = index + #alias
+                elseif var then
+                    append(tokens, {
+                        type = "var",
+                        value = var
+                    })
+                    index = index + #var
+                else
+                    error("无法识别的字符: " .. char)
+                end
+            end
+        end
+    end
+
+    return tokens
 end
