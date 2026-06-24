@@ -2,7 +2,7 @@ local _M = {
     id = "equ",
     name = "等价",
     alias = {
-        "⇔", "↔", "<->", "="
+        "⇔", "↔", "←→", "<->", "="
     },
     arity = 2,
     precedence = 1,

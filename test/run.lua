@@ -50,6 +50,13 @@ assert_tokens("pVq", {
     { type = "var", value = "q" },
 })
 
+assert_tokens("￢P←→Q", {
+    { type = "symbol", value = "neg" },
+    { type = "var", value = "P" },
+    { type = "symbol", value = "equ" },
+    { type = "var", value = "Q" },
+})
+
 local implication = ltt.truth_table("P -> Q")
 assert_equal(#implication.vars, 2, "implication var count")
 assert_equal(#implication.rows, 4, "implication row count")
@@ -68,6 +75,10 @@ assert_equal(equivalence.rows[4].result, true, "1 <-> 1")
 local compact_disjunction = ltt.truth_table("(!p→q)→(pV!q)")
 assert_equal(#compact_disjunction.vars, 2, "compact disjunction var count")
 assert_equal(compact_disjunction.rows[2].result, false, "(!0 -> 1) -> (0 V !1)")
+
+local full_width_negation = ltt.truth_table("(r→(p∧q))←→￢(p∧q)∧r")
+assert_equal(#full_width_negation.vars, 3, "full-width expression var count")
+assert_equal(full_width_negation.rows[2].result, false, "(0 -> (0 and 0)) <-> not (0 and 0) and 1")
 
 local ok, err = pcall(function()
     ltt.truth_table("P Q")

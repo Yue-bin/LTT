@@ -2,7 +2,7 @@ local _M = {
     id = "neg",
     name = "否定",
     alias = {
-        "¬", "~", "!"
+        "¬", "~", "!", "￢"
     },
     arity = 1,
     precedence = 5,
