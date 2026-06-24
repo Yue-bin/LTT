@@ -2,7 +2,7 @@ local _M = {
     id = "dis",
     name = "析取",
     alias = {
-        "∨", "|", "v", "+"
+        "∨", "|", "V", "v", "+"
     },
     arity = 2,
     precedence = 3,

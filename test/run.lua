@@ -33,6 +33,23 @@ assert_tokens("(foo_1 -> 0)", {
     { type = "rparen", value = ")" },
 })
 
+assert_tokens("fooVar", {
+    { type = "var", value = "fooVar" },
+})
+
+assert_tokens("pV!q", {
+    { type = "var", value = "p" },
+    { type = "symbol", value = "dis" },
+    { type = "symbol", value = "neg" },
+    { type = "var", value = "q" },
+})
+
+assert_tokens("pVq", {
+    { type = "var", value = "p" },
+    { type = "symbol", value = "dis" },
+    { type = "var", value = "q" },
+})
+
 local implication = ltt.truth_table("P -> Q")
 assert_equal(#implication.vars, 2, "implication var count")
 assert_equal(#implication.rows, 4, "implication row count")
@@ -47,6 +64,10 @@ local equivalence = ltt.truth_table("P <-> Q")
 assert_equal(equivalence.rows[1].result, true, "0 <-> 0")
 assert_equal(equivalence.rows[2].result, false, "0 <-> 1")
 assert_equal(equivalence.rows[4].result, true, "1 <-> 1")
+
+local compact_disjunction = ltt.truth_table("(!p→q)→(pV!q)")
+assert_equal(#compact_disjunction.vars, 2, "compact disjunction var count")
+assert_equal(compact_disjunction.rows[2].result, false, "(!0 -> 1) -> (0 V !1)")
 
 local ok, err = pcall(function()
     ltt.truth_table("P Q")
